@@ -130,8 +130,10 @@ void HleShowCFB(void* UNUSED(user_defined))
 EXPORT m64p_error CALL PluginStartup(m64p_dynlib_handle UNUSED(CoreLibHandle), void *Context,
                                      void (*DebugCallback)(void *, int, const char *))
 {
+#if (!EMSCRIPTEN)
     if (l_PluginInit)
         return M64ERR_ALREADY_INIT;
+#endif
 
     /* first thing is to set the callback function for debug info */
     l_DebugCallback = DebugCallback;
