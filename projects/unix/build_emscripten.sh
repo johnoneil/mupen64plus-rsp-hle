@@ -1,6 +1,7 @@
 #!/bin/bash
 
 emmake make \
+  UNAME=Linux \
   EMSCRIPTEN=1 \
   SO_EXTENSION="js" \
   USE_GLES=1 NO_ASM=1 NO_OSS=1 NO_SRC=1 NO_SPEEX=1\
@@ -12,5 +13,5 @@ emmake make \
   GL_CFLAGS="" \
   GLU_CFLAGS="" \
   V=1 \
-  OPTFLAGS="-O0 -g2 -s SIDE_MODULE=1 -s ASSERTIONS=1 -DEMSCRIPTEN=1" \
+  OPTFLAGS="-O0 -g2 -s SIDE_MODULE=1 -s ASSERTIONS=1 -DEMSCRIPTEN=1 -DVIDEO_HLE_ALLOWED=1" \
   $1

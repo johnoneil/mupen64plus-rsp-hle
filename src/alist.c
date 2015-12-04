@@ -33,6 +33,10 @@
 #include "hle_internal.h"
 #include "memory.h"
 
+#if EMSCRIPTEN
+#include "emscripten.h"
+#endif
+
 struct ramp_t
 {
     int64_t value;
@@ -111,10 +115,20 @@ void alist_process(struct hle_t* hle, const acmd_callback_t abi[], unsigned int 
 
         acmd = (w1 >> 24) & 0x7f;
 
-        if (acmd < abi_size)
+        if (acmd < abi_size && abi[acmd])
+        {
+#if 0 //EMSCRIPTEN
+            EM_ASM_INT({console.error("alist_process invoking callback of index: ",$0|0," with pointer ",$1|0);},acmd,abi[acmd]);
+#endif
             (*abi[acmd])(hle, w1, w2);
+        }
         else
+        {
             HleWarnMessage(hle->user_defined, "Invalid ABI command %u", acmd);
+#if EMSCRIPTEN
+            EM_ASM_INT({console.error("BALING on alist command processing due to acmd index: ",$0|0," with pointer ",$1|0);},acmd,abi[acmd]);
+#endif
+        }
     }
 }
 

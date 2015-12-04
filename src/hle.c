@@ -154,7 +154,8 @@ static unsigned int sum_bytes(const unsigned char *bytes, unsigned int size)
  **/
 static bool is_task(struct hle_t* hle)
 {
-    return (*dmem_u32(hle, TASK_UCODE_BOOT_SIZE) <= 0x1000);
+    bool t =  (*dmem_u32(hle, TASK_UCODE_BOOT_SIZE) <= 0x1000);
+    return t;
 }
 
 static void rsp_break(struct hle_t* hle, unsigned int setbits)
@@ -256,6 +257,7 @@ static bool try_fast_audio_dispatching(struct hle_t* hle)
 static bool try_fast_task_dispatching(struct hle_t* hle)
 {
     /* identify task ucode by its type */
+
     switch (*dmem_u32(hle, TASK_TYPE)) {
     case 1:
         if (FORWARD_GFX) {

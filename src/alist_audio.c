@@ -269,12 +269,34 @@ static void POLEF(struct hle_t* hle, uint32_t w1, uint32_t w2)
 /* global functions */
 void alist_process_audio(struct hle_t* hle)
 {
-    static const acmd_callback_t ABI[0x10] = {
+    //static const acmd_callback_t ABI[0x10] = {
+    static acmd_callback_t ABI[0x10] = {
         SPNOOP,         ADPCM ,         CLEARBUFF,      ENVMIXER,
         LOADBUFF,       RESAMPLE,       SAVEBUFF,       SEGMENT,
         SETBUFF,        SETVOL,         DMEMMOVE,       LOADADPCM,
         MIXER,          INTERLEAVE,     POLEF,          SETLOOP
     };
+#if EMSCRIPTEN
+    ABI[0] = SPNOOP;
+    ABI[1] = ADPCM;
+    ABI[2] = CLEARBUFF;
+    ABI[3] = ENVMIXER;
+
+    ABI[4] = LOADBUFF;
+    ABI[5] = RESAMPLE;
+    ABI[6] = SAVEBUFF;
+    ABI[7] = SEGMENT;
+
+    ABI[8] = SETBUFF;
+    ABI[9] = SETVOL;
+    ABI[10] = DMEMMOVE;
+    ABI[11] = LOADADPCM;
+
+    ABI[12] = MIXER;
+    ABI[13] = INTERLEAVE;
+    ABI[14] = POLEF;
+    ABI[15] = SETLOOP;
+#endif
 
     clear_segments(hle);
     alist_process(hle, ABI, 0x10);
