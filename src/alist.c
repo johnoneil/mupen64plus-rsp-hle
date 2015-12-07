@@ -126,7 +126,7 @@ void alist_process(struct hle_t* hle, const acmd_callback_t abi[], unsigned int 
         {
             HleWarnMessage(hle->user_defined, "Invalid ABI command %u", acmd);
 #if EMSCRIPTEN
-            EM_ASM_INT({console.error("BALING on alist command processing due to acmd index: ",$0|0," with pointer ",$1|0);},acmd,abi[acmd]);
+            EM_ASM_INT({console.error("BAiLING on alist command processing due to acmd index: ",$0|0," with pointer ",$1|0);},acmd,abi[acmd]);
 #endif
         }
     }
@@ -1035,4 +1035,3 @@ void alist_iirf(
     dram_store_u16(hle, (uint16_t*)&ibuf[(index-2)&3], address+8, 2);
     dram_store_u16(hle, (uint16_t*)&ibuf[(index-1)&3], address+10, 2);
 }
-
